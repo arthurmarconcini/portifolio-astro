@@ -67,5 +67,17 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    require("tailwind-typewriter")({
+      wordsets: {
+        social: {
+          words: ["@arthurmarconcini"],
+          writeSpeed: 0.1,
+          pauseBetween: 6,
+          eraseSpeed: 0.05,
+        },
+      },
+    }),
+  ],
 };
