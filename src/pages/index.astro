@@ -1,50 +1,34 @@
 ---
-
 import {AvatarComponent} from "@/components/Avatar"
 import Layout from '../layouts/Layout.astro';
-import {Card, CardContent, CardTitle} from '@/components/ui/card'
-import { firstCharToUpperCase } from "@/lib/utils";
 
-const response = await fetch('https://api.github.com/users/arthurmarconcini/repos');
-const data: Repository[] = await response.json();
-const user =  data.sort((a, b) => b.created_at.localeCompare(a.created_at)).slice(0, 5) || [] ;
+import { ReposList } from "@/components/ReposList";
+import type { Repository } from "@/types/repos";
+import { Button } from "@/components/ui/button";
 
+import {Download} from "lucide-react"
 
-interface Repository {
-	id: number
-	name: string
-	full_name: string
-	html_url: string
-	description: string
-	created_at: string
-}
+/* const response = await fetch('https://api.github.com/users/arthurmarconcini/repos');
+const data: Repository[] = await response.json() || []; */
+
+const data: Repository[] = [{id: 1, name: "Agenda", full_name: "agenda", description: "Agenda criada com REACT", created_at: new Date().toDateString(), html_url: "https://github.com.br/arthurmarconcini"}, {id: 2, name: "Agenda", full_name: "agenda", description: "Agenda criada com REACT", created_at: new Date().toDateString(), html_url: "https://github.com.br/arthurmarconcini"}, {id: 3, name: "Agenda", full_name: "agenda", description: "Agenda criada com REACT", created_at: new Date().toDateString(), html_url: "https://github.com.br/arthurmarconcini"},{id: 4, name: "Agenda", full_name: "agenda", description: "Agenda criada com REACT", created_at: new Date().toDateString(), html_url: "https://github.com.br/arthurmarconcini"}, {id: 5, name: "Agenda", full_name: "agenda", description: "Agenda criada com REACT", created_at: new Date().toDateString(), html_url: "https://github.com.br/arthurmarconcini"}]
+const user = data.sort((a, b) => b.created_at.localeCompare(a.created_at)).slice(0, 5)  ;
 ---
 
 <Layout title="Welcome to Astro.">
-	<main class="mt-8 mx-auto w-full max-w-6xl flex flex-col justify-center items-center gap-8">		
+	<main class="p-8 mx-auto w-full max-w-6xl flex flex-col justify-center items-center gap-8">		
 		<AvatarComponent />
-		<div class="flex flex-col items-center text-slate-400">
-			
-			<h1 class="mb-8 font-bold type-social text-lg text-white" />
-				
-			
+		<div class="flex flex-col items-center text-slate-400">			
+			<h1 class="mb-8 font-bold type-social text-lg text-white" />			
 			<p>🎓 Formado em Ciências da Computação pela Faculdade Pitágoras de Guarapari</p>
-			<p>💼 Desenvolvedor Fullstack Freelancer há 1 ano</p>
+			<p>💼 Desenvolvedor Fullstack Freelancer há 1 ano.</p>
 			<p>🤝 Estou sempre aberto a fazer novos contatos e colaborar em projetos empolgantes.</p>
 		</div>
-		<div class="flex flex-col gap-2  ">
-			{user.map((repos, index) => ((				
-				<Card className="group-hover:bg-slate-900 first:bg-gradient-to-tr first:from-fuchsia-500 first:via-violet-600 first:to-cyan-500">
-					<a href={repos.html_url} target="_blank" class="group relative">
-						{index === 0 ? <span class="absolute top-6 left-2 animate-bounce text-slate-900 font-bold antialiased">NEW</span> : null}
-						<CardTitle className="p-2 font-bold text-lg text-center">{firstCharToUpperCase(repos.name)}</CardTitle>
-						<CardContent className="mt-2">						
-							<p class="text-center">{repos.description}</p>
-						</CardContent>
-					</a>					
-				</Card>								
-			)))}
-		</div>		
+		<div class="flex items-center justify-start gap-4">
+			<span class="font-light text-lg">Baixar Curriculum</span>
+			<Button className="animate-pulse" variant="outline"><Download /></Button>
+		</div>
+		<ReposList repository={user} />
 	</main>
 </Layout>
 
