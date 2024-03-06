@@ -14,7 +14,7 @@ export const ReposList = (props: ReposListProps) => {
   return (
     <div className="flex flex-col gap-2 w-full max-w-2xl">
       {props.repository.map((repos, index) => (
-        <Card className="first:bg-gradient-to-tr first:from-fuchsia-500 first:via-violet-600 first:to-cyan-500 ">
+        <Card className="first:bg-gradient-to-tr first:from-fuchsia-500 first:via-violet-600 first:to-cyan-500 hover:opacity-95 n">
           <a href={repos.html_url} target="_blank" className="relative">
             {index === 0 ? (
               <span className="absolute top-6 left-2 animate-bounce text-slate-900 font-bold antialiased">
