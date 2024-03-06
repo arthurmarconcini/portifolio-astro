@@ -7,6 +7,7 @@ import type { Repository } from "@/types/repos";
 import { Button } from "@/components/ui/button";
 
 import {Download} from "lucide-react"
+import { SocialList } from "@/components/SocialList";
 
 /* const response = await fetch('https://api.github.com/users/arthurmarconcini/repos');
 const data: Repository[] = await response.json() || []; */
@@ -29,6 +30,7 @@ const user = data.sort((a, b) => b.created_at.localeCompare(a.created_at)).slice
 			<Button className="animate-pulse" variant="outline"><Download /></Button>
 		</div>
 		<ReposList repository={user} />
+		<SocialList />
 	</main>
 </Layout>
 
