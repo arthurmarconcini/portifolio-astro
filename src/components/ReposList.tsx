@@ -5,15 +5,13 @@ import { ptBR } from "date-fns/locale/pt-BR";
 import type { Repository } from "@/types/repos";
 
 interface ReposListProps {
-  repository: Repository[];
+  repository: Repository[] | undefined;
 }
 
 export const ReposList = (props: ReposListProps) => {
-  if (!props.repository.length) return <div>Nao a nada</div>;
-
   return (
     <div className="flex flex-col gap-2 w-full max-w-2xl">
-      {props.repository.map((repos, index) => (
+      {props.repository!.map((repos, index) => (
         <Card className="first:bg-gradient-to-tr first:from-fuchsia-500 first:via-violet-600 first:to-cyan-500 hover:opacity-95 n">
           <a href={repos.html_url} target="_blank" className="relative">
             {index === 0 ? (

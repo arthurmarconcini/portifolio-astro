@@ -18,7 +18,7 @@ const user = data.sort((a, b) => b.created_at.localeCompare(a.created_at)).slice
 ---
 
 <Layout title="Welcome to Astro.">
-	<main class="p-8 mx-auto w-full max-w-6xl flex flex-col justify-center items-center gap-8">		
+	{user ? (<main class="p-8 mx-auto w-full max-w-6xl flex flex-col justify-center items-center gap-8">		
 		<AvatarComponent />
 		<div class="flex flex-col items-center text-slate-400">			
 			<h1 class="mb-8 font-bold type-social text-lg text-white" />			
@@ -29,10 +29,13 @@ const user = data.sort((a, b) => b.created_at.localeCompare(a.created_at)).slice
 		<Tools />
 		<div class="flex items-center justify-start gap-4">
 			<span class="font-light text-lg">Baixar Curriculum</span>
-			<Button className="animate-pulse" variant="outline"><Download /></Button>
+			<a href="https://drive.google.com/file/d/1bPgQLDLuF1Di0KqBEESXZ5ZOBgxm8lxq/view?usp=sharing" target="_blank" rel="noreferrer" class="animate-pulse border border-slate-400 rounded-lg p-2">				
+				<Button asChild variant="outline"><Download /></Button>
+			</a>			
 		</div>
 		<ReposList repository={user} />
 		<SocialList />
-	</main>
+	</main>) : (<div>Carregando...</div>)}
+	
 </Layout>
 
