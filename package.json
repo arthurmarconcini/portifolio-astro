@@ -1,7 +1,6 @@
 {
   "name": "portifolio-app-astro",
   "type": "module",
-  "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -9,10 +8,15 @@
     "preview": "astro preview",
     "astro": "astro"
   },
+  "version": "0.0.1",
+  "prisma": {
+    "seed": "ts-node prisma/seed.js"
+  },
   "dependencies": {
     "@astrojs/check": "^0.5.6",
     "@astrojs/react": "^3.0.10",
     "@astrojs/tailwind": "^5.1.0",
+    "@prisma/client": "^5.11.0",
     "@radix-ui/react-avatar": "^1.0.4",
     "@radix-ui/react-slot": "^1.0.2",
     "@types/react": "^18.2.60",
@@ -28,7 +32,12 @@
     "tailwind-merge": "^2.2.1",
     "tailwind-typewriter": "^1.0.1",
     "tailwindcss": "^3.4.1",
-    "tailwindcss-animate": "^1.0.7",
-    "typescript": "^5.3.3"
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.28",
+    "prisma": "^5.11.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.2"
   }
 }
