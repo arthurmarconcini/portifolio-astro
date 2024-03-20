@@ -1,0 +1,33 @@
+---
+import { prismaClient } from "@/lib/prisma";
+import Layout from "../../layouts/Layout.astro";
+import { Card } from "@/components/ui/card";
+import type { Page } from "astro";
+import type { Project } from "@prisma/client";
+import Pagination from "@/components/Pagination";
+
+export async function getStaticPaths({ paginate }: { paginate: Function }) {
+  const users = await prismaClient.project.findMany({});
+
+  return paginate(users, { pageSize: 5 });
+}
+
+const { page } = Astro.props as { page: Page<Project> };
+---
+
+<Layout title="Welcome to Astro.">
+  <main
+    class="p-8 mx-auto w-full max-w-6xl flex flex-col justify-center items-center gap-8"
+  >
+    <div>
+      {
+        page.data.map((user) => (
+          <Card>
+            <h1>{user.title}</h1>
+          </Card>
+        ))
+      }
+    </div>
+    <Pagination page={page} />
+  </main>
+</Layout>
