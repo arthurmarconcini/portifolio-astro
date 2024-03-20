@@ -1,40 +1,51 @@
 ---
-import {AvatarComponent} from "@/components/Avatar"
-import Layout from '../layouts/Layout.astro';
+import { AvatarComponent } from "@/components/Avatar";
+import Layout from "../layouts/Layout.astro";
 
 import { ReposList } from "@/components/ReposList";
 import { Button } from "@/components/ui/button";
 
-import {Download} from "lucide-react"
+import { Download } from "lucide-react";
 import { SocialList } from "@/components/SocialList";
 import Tools from "@/components/Tools";
 import { prismaClient } from "@/lib/prisma";
 import type { Project } from "@prisma/client";
+import TopButton from "@/components/TopButton";
 
-const projects: Project[] = await prismaClient.project.findMany()
+const projects: Project[] = await prismaClient.project.findMany();
 ---
-	<Layout title="Welcome to Astro.">
-		<main class="p-8 mx-auto w-full max-w-6xl flex flex-col justify-center items-center gap-8">		
-			<AvatarComponent />
-			<div class="flex flex-col items-center text-slate-400">			
-				<h1 class="mb-8 font-bold type-social text-lg text-white" />			
-				<p>🎓 Formado em Ciências da Computação pela Faculdade Pitágoras de Guarapari</p>
-				<p>💼 Desenvolvedor Fullstack Freelancer há 1 ano.</p>
-				<p>🤝 Estou sempre aberto a fazer novos contatos e colaborar em projetos empolgantes.</p>
-			</div>
-			<Tools />
-			<div class="flex items-center justify-start gap-4">
-				<span class="font-light text-lg">Baixar Curriculum</span>
-				<a href="https://drive.google.com/file/d/1bPgQLDLuF1Di0KqBEESXZ5ZOBgxm8lxq/view?usp=sharing" target="_blank" rel="noreferrer" class="animate-pulse border border-slate-400 rounded-lg p-2">				
-					<Button asChild variant="outline"><Download /></Button>
-				</a>			
-			</div>
-			<ReposList repos={projects} />
-			<SocialList />
-		</main>
-	</Layout>
-	
 
-
-
-
+<Layout title="Welcome to Astro.">
+  <main
+    class="p-8 mx-auto w-full max-w-6xl flex flex-col justify-center items-center gap-8 relative"
+  >
+    <AvatarComponent />
+    <div class="flex flex-col items-center text-slate-400">
+      <h1 class="mb-8 font-bold type-social text-lg text-white"></h1>
+      <p>
+        🎓 Formado em Ciências da Computação pela Faculdade Pitágoras de
+        Guarapari
+      </p>
+      <p>💼 Desenvolvedor Fullstack Freelancer há 1 ano.</p>
+      <p>
+        🤝 Estou sempre aberto a fazer novos contatos e colaborar em projetos
+        empolgantes.
+      </p>
+    </div>
+    <Tools />
+    <div class="flex items-center justify-start gap-4">
+      <span class="font-light text-lg">Baixar Curriculum</span>
+      <a
+        href="https://drive.google.com/file/d/1bPgQLDLuF1Di0KqBEESXZ5ZOBgxm8lxq/view?usp=sharing"
+        target="_blank"
+        rel="noreferrer"
+        class="animate-pulse border border-slate-400 rounded-lg p-2"
+      >
+        <Button asChild variant="outline"><Download /></Button>
+      </a>
+    </div>
+    <ReposList repos={projects} />
+    <SocialList />
+    <TopButton client:only="react" />
+  </main>
+</Layout>

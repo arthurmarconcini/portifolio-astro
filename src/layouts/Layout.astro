@@ -1,37 +1,32 @@
 ---
 interface Props {
-	title: string;
+  title: string;
 }
 
 const { title } = Astro.props;
-import '@/styles/globals.css'
+import "@/styles/globals.css";
 
-import {Header} from "@/components/Header"
-import {Footer} from "@/components/Footer"
-import { Button } from '@/components/ui/button';
-import { ArrowBigUp} from 'lucide-react';
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
+import { Button } from "@/components/ui/button";
+import { ArrowBigUp } from "lucide-react";
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-	</head>
-	<body class="dark relative">
-		<Header />
-		
-		<slot />
-		<Button asChild>
-			<a href="/" class="absolute bottom-24 right-12 animate-pulse">	
-				<ArrowBigUp width={36} />		
-			</a>
-		</Button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body class="dark flex flex-col min-h-screen">
+    <Header />
 
-		<Footer />
-	</body>
+    <slot />
+
+    <Footer />
+  </body>
 </html>

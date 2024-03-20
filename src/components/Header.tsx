@@ -10,17 +10,18 @@ export const Header = () => {
           </Button>
         </a>
       </li>
-      <li className="opacity-50 cursor-not-allowed">
-        <Button asChild variant="secondary" disabled>
-          <p>Blog</p>
-        </Button>
-      </li>
+
       <li>
         <a href="/projetos">
           <Button asChild variant="secondary">
             <p>Projetos</p>
           </Button>
         </a>
+      </li>
+      <li className="opacity-50 cursor-not-allowed">
+        <Button asChild variant="secondary" disabled>
+          <p>Blog</p>
+        </Button>
       </li>
     </ul>
   );
