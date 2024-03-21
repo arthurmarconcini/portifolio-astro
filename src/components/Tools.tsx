@@ -1,5 +1,3 @@
-import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
-
 import reactImg from "./../assets/react.svg";
 import astroImg from "./../assets/react.svg";
 import cssImg from "./../assets/css.svg";
