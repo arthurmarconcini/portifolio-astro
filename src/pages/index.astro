@@ -1,16 +1,18 @@
 ---
-import { AvatarComponent } from "@/components/Avatar";
 import Layout from "../layouts/Layout.astro";
 
+import { AvatarComponent } from "@/components/Avatar";
 import { ReposList } from "@/components/ReposList";
 import { Button } from "@/components/ui/button";
+import { SocialList } from "@/components/SocialList";
+import TopButton from "@/components/TopButton";
+import Tools from "@/components/Tools";
+
+import { prismaClient } from "@/lib/prisma";
 
 import { Download } from "lucide-react";
-import { SocialList } from "@/components/SocialList";
-import Tools from "@/components/Tools";
-import { prismaClient } from "@/lib/prisma";
+
 import type { Project } from "@prisma/client";
-import TopButton from "@/components/TopButton";
 
 const projects: Project[] = await prismaClient.project.findMany();
 ---
