@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/card";
 import type { Page } from "astro";
 import type { Project } from "@prisma/client";
 import Pagination from "@/components/Pagination";
+export const prerender = true;
 
 export async function getStaticPaths({ paginate }: { paginate: Function }) {
   const users = await prismaClient.project.findMany({});
