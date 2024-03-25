@@ -3,64 +3,34 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
-  const artstore = await prisma.project.create({
-    data: {
-      title: "Artstore",
-      description: "E-commerce website for selling all",
-      github_url: "https://github.com/arthurmarconcini/artstore",
-    },
-  });
+  try {
+    // Faz uma requisição GET para a API do GitHub
+    const response = await fetch(`${import.meta.env.PUBLIC_GITHUB_URL}`).then(
+      (response) => response.json()
+    );
 
-  const expert_notes = await prisma.project.create({
-    data: {
-      title: "Expert Notes",
-      description: "A simple note taking app",
-      github_url: "https://github.com/arthurmarconcini/expert-notes",
-    },
-  });
+    console.log(response);
 
-  const expenses = await prisma.project.create({
-    data: {
-      title: "Expenses",
-      description: "A simple expense tracking app",
-      github_url: "https://github.com/arthurmarconcini/expenses",
-    },
-  });
+    // Mapeia os dados da resposta para o formato desejado
+    const repositories = response.map((repo) => ({
+      title: repo.name,
+      description: repo.description || "",
+      created_at: repo.created_at,
+      github_url: repo.html_url,
+    }));
 
-  const delivery_backoffice = await prisma.project.create({
-    data: {
-      title: "Delivery Backoffice",
-      description: "A delivery backoffice for a small company",
-      github_url: "https://github.com/arthurmarconcini/delivery_backoffice",
-    },
-  });
+    // Cria os registros no banco de dados usando o Prisma
+    await prisma.project.createMany({
+      data: repositories,
+      skipDuplicates: true, // Ignora registros duplicados com base no campo "id"
+    });
 
-  const ignews = await prisma.project.create({
-    data: {
-      title: "Ignews",
-      description: "A simple news app",
-      github_url: "https://github.com/arthurmarconcini/ignews",
-    },
-  });
-
-  const upfi = await prisma.project.create({
-    data: {
-      title: "Upfi",
-      description: "A fast and secure file sharing app",
-      github_url: "https://github.com/arthurmarconcini/upfi",
-    },
-  });
+    console.log("Seed concluído com sucesso!");
+  } catch (error) {
+    console.error("Erro ao executar o seed:", error);
+  } finally {
+    await prisma.$disconnect();
+  }
 }
 
-main()
-  .then(async () => {
-    await prisma.$disconnect();
-  })
-
-  .catch(async (e) => {
-    console.error(e);
-
-    await prisma.$disconnect();
-
-    process.exit(1);
-  });
+main();
