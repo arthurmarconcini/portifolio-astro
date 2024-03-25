@@ -4,6 +4,7 @@ import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale/pt-BR";
 import type { Project } from "@prisma/client";
 import { Button } from "./ui/button";
+import ProjectCard from "./ProjectCard";
 
 interface ReposListProps {
   repos: Project[];
@@ -14,8 +15,12 @@ export const ReposList = ({ repos }: ReposListProps) => {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex flex-col gap-2 w-full max-w-2xl">
-        {top5repos.map((repos, index) => (
+      <div className="flex flex-col gap-2 w-full">
+        {top5repos.map((repo, index) => (
+          <ProjectCard key={index} project={repo} />
+        ))}
+
+        {/* {top5repos.map((repos, index) => (
           <Card
             key={repos.id}
             className="first:bg-gradient-to-tr first:from-fuchsia-500 first:via-violet-600 first:to-cyan-500 hover:opacity-95 n"
@@ -41,7 +46,7 @@ export const ReposList = ({ repos }: ReposListProps) => {
               </CardContent>
             </a>
           </Card>
-        ))}
+        ))} */}
       </div>
       <a href="/projetos" className="w-full">
         <Button variant={"link"} className="w-full text-xl">

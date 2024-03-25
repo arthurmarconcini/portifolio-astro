@@ -43,22 +43,29 @@ const Pagination = ({ page }: PaginationProps) => {
   return (
     <ShadcnPagination>
       <PaginationContent>
-        <PaginationItem>
-          {currentPage > 1 ? (
-            <>
-              <PaginationPrevious href={`/projetos/${currentPage - 1}`} />
-              <PaginationItem>
-                <PaginationEllipsis />
-              </PaginationItem>
-            </>
-          ) : null}
-        </PaginationItem>
+        {currentPage > 1 ? (
+          <>
+            <PaginationItem>
+              <PaginationPrevious
+                href={
+                  currentPage > 1 ? "/projetos" : `/projetos/${currentPage - 1}`
+                }
+              />
+            </PaginationItem>
+
+            <PaginationItem>
+              <PaginationEllipsis />
+            </PaginationItem>
+          </>
+        ) : null}
+
         {renderVisiblePages()}
         {currentPage < lastPage ? (
           <>
             <PaginationItem>
               <PaginationEllipsis />
             </PaginationItem>
+
             <PaginationItem>
               <PaginationNext href={`/projetos/${currentPage + 1}`} />
             </PaginationItem>

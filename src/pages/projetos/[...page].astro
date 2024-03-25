@@ -1,32 +1,29 @@
 ---
 import { prismaClient } from "@/lib/prisma";
 import Layout from "../../layouts/Layout.astro";
-import { Card } from "@/components/ui/card";
+
 import type { Page } from "astro";
 import type { Project } from "@prisma/client";
 import Pagination from "@/components/Pagination";
+import ProjectCard from "@/components/ProjectCard";
 export const prerender = true;
 
 export async function getStaticPaths({ paginate }: { paginate: Function }) {
-  const users = await prismaClient.project.findMany({});
+  const repos = await prismaClient.project.findMany({});
 
-  return paginate(users, { pageSize: 5 });
+  return paginate(repos, { pageSize: 5 });
 }
 
 const { page } = Astro.props as { page: Page<Project> };
 ---
 
 <Layout title="Welcome to Astro.">
-  <main class="p-8 mx-auto w-full flex-1 max-w-6xl">
-    <div class="flex flex-col mb-10">
-      {
-        page.data.map((user) => (
-          <Card>
-            <h1>{user.title}</h1>
-          </Card>
-        ))
-      }
-    </div>
+  <main
+    class="p-8 max-w-6xl mx-auto w-full flex flex-col flex-1 justify-start items-center gap-8"
+  >
     <Pagination page={page} />
+    <div class="flex flex-col gap-2 mb-10">
+      {page.data.map((user) => <ProjectCard project={user} />)}
+    </div>
   </main>
 </Layout>
