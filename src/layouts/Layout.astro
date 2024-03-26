@@ -3,9 +3,10 @@ import "@/styles/globals.css";
 
 interface Props {
   title: string;
+  description?: string;
 }
 
-const { title } = Astro.props;
+const { title, description } = Astro.props;
 
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -20,7 +21,9 @@ import { Footer } from "@/components/Footer";
     <link rel="icon" type="image/svg+xml" href="/favicon.jpg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <meta name="description" content={description ? description : ""} />
   </head>
+
   <body class="dark flex flex-col min-h-screen">
     <Header />
 
