@@ -8,16 +8,24 @@ import {
 } from "./ui/card";
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale/pt-BR";
-import { firstCharToUpperCase } from "@/lib/utils";
 
 interface ProjectCardProps {
   project: Project;
 }
 
 const ProjectCard = ({ project }: ProjectCardProps) => {
+  const now = new Date();
+  const sevenDaysAgo = new Date(now);
+  sevenDaysAgo.setDate(now.getDate() - 7);
+
   return (
     <a href={project.github_url} target="_blank" className="group">
-      <Card className="group-hover:border-violet-600 transition">
+      <Card className="group-hover:border-violet-600 transition relative">
+        {project.created_at >= sevenDaysAgo ? (
+          <span className="absolute top-2 right-2 animate-bounce text-slate-900 font-bold antialiased">
+            NEW
+          </span>
+        ) : null}
         <CardHeader>
           <CardTitle>{project.title}</CardTitle>
         </CardHeader>

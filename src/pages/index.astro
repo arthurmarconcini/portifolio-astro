@@ -14,7 +14,11 @@ import { Download } from "lucide-react";
 
 import type { Project } from "@prisma/client";
 
-const projects: Project[] = await prismaClient.project.findMany();
+const projects: Project[] = await prismaClient.project.findMany({
+  orderBy: {
+    created_at: "desc",
+  },
+});
 ---
 
 <Layout title="Welcome to Astro.">

@@ -9,7 +9,7 @@ import nodeImg from "./../assets/node-js.svg";
 
 const Tools = () => {
   return (
-    <div className="flex gap-4 my-6">
+    <div className="flex flex-wrap justify-center gap-4 my-6">
       <div>
         <img className="w-10 h-10" src={htmlImg.src} alt="html" />
       </div>
