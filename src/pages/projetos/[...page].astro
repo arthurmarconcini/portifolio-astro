@@ -19,7 +19,7 @@ export async function getStaticPaths({ paginate }: { paginate: Function }) {
 const { page } = Astro.props as { page: Page<Project> };
 ---
 
-<Layout title="Welcome to Astro.">
+<Layout title={`Pagina ${page.currentPage.toString()}`}>
   <main
     class="p-8 max-w-6xl mx-auto w-full flex flex-col flex-1 justify-start items-center gap-8"
   >
