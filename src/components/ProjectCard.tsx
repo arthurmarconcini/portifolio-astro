@@ -19,7 +19,11 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
   sevenDaysAgo.setDate(now.getDate() - 7);
 
   return (
-    <a href={project.github_url} target="_blank" className="group">
+    <a
+      href={project.github_url}
+      target="_blank"
+      className="group w-80 md:w-96 lg:w-[32rem]"
+    >
       <Card className="group-hover:border-violet-600 transition relative">
         {project.created_at >= sevenDaysAgo ? (
           <span className="absolute top-2 right-2 animate-bounce text-slate-900 font-bold antialiased">
