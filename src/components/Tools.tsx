@@ -1,5 +1,5 @@
 import reactImg from "./../assets/react.svg";
-import astroImg from "./../assets/react.svg";
+import astroImg from "./../assets/astro.svg";
 import cssImg from "./../assets/css.svg";
 import htmlImg from "./../assets/html.svg";
 import jsImg from "./../assets/js.svg";
@@ -30,7 +30,7 @@ const Tools = () => {
       </div>
       <div>
         <img
-          className="w-9 h-9 bg-white rounded-full"
+          className="w-10 h-10 bg-white rounded-full"
           src={nextImg.src}
           alt="next"
         />

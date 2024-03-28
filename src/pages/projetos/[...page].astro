@@ -6,6 +6,7 @@ import type { Page } from "astro";
 import type { Project } from "@prisma/client";
 import Pagination from "@/components/Pagination";
 import ProjectCard from "@/components/ProjectCard";
+
 export const prerender = true;
 
 export async function getStaticPaths({ paginate }: { paginate: Function }) {
@@ -23,9 +24,9 @@ const { page } = Astro.props as { page: Page<Project> };
   <main
     class="p-8 max-w-6xl mx-auto w-full flex flex-col flex-1 justify-start items-center gap-8"
   >
-    <Pagination page={page} />
     <div class="flex flex-col gap-2 mb-10">
       {page.data.map((user) => <ProjectCard project={user} />)}
     </div>
+    <Pagination page={page} />
   </main>
 </Layout>

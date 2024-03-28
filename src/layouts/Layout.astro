@@ -1,5 +1,6 @@
 ---
 import "@/styles/globals.css";
+import { ViewTransitions } from "astro:transitions";
 
 interface Props {
   title: string;
@@ -22,6 +23,7 @@ import { Footer } from "@/components/Footer";
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description ? description : ""} />
+    <ViewTransitions transition:animate={"slide"} />
   </head>
 
   <body class="dark flex flex-col min-h-screen">

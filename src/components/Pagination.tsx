@@ -15,7 +15,7 @@ interface PaginationProps {
 }
 
 const Pagination = ({ page }: PaginationProps) => {
-  const { currentPage, end, start, total, size, lastPage } = page;
+  const { currentPage, total, size, lastPage } = page;
 
   const totalPages = Math.ceil(total / size);
 
