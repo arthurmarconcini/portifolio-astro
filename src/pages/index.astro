@@ -13,6 +13,7 @@ import { prismaClient } from "@/lib/prisma";
 import { Download } from "lucide-react";
 
 import type { Project } from "@prisma/client";
+import ContactForm from "@/components/ContactForm";
 
 const description =
   "Arthur Marconcini - Desenvolvedor Javascript Fullstack Freelancer";
@@ -29,9 +30,9 @@ const projects: Project[] = await prismaClient.project.findMany({
     class="p-8 mx-auto w-full max-w-6xl flex flex-col justify-center items-center gap-8 relative"
   >
     <AvatarComponent />
-    <div class="flex flex-col items-center text-slate-400">
+    <div class="flex flex-col items-center">
       <h1
-        class="mb-8 font-bold type-social text-lg font-noto antialiased text-white"
+        class="mb-8 font-bold type-social text-lg font-noto antialiased dark:text-white text-slate-900"
       >
       </h1>
       <p>
@@ -57,6 +58,8 @@ const projects: Project[] = await prismaClient.project.findMany({
       </a>
     </div>
     <ReposList repos={projects} client:only="react" />
+
+    <!-- <ContactForm client:only="react" /> -->
     <SocialList />
     <TopButton client:only="react" />
   </main>

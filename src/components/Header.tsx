@@ -2,7 +2,7 @@ import { Button } from "./ui/button";
 
 export const Header = () => {
   return (
-    <ul className="mt-8 flex justify-center items-center gap-4">
+    <ul className="mt-8 flex flex-1 justify-center items-center gap-4">
       <li>
         <a href="/">
           <Button asChild variant="secondary">
