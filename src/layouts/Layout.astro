@@ -9,6 +9,8 @@ interface Props {
 
 const { title, description } = Astro.props;
 
+const path = Astro.url.pathname;
+
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import DarkModeToggle from "@/components/modeToggle";
@@ -28,10 +30,9 @@ import DarkModeToggle from "@/components/modeToggle";
   </head>
 
   <body class="flex flex-col min-h-screen">
-    <Header />
-    <DarkModeToggle client:load />
+    <Header path={path} />
+    <DarkModeToggle client:only="react" />
     <slot />
-
     <Footer />
   </body>
 </html>
