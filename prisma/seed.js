@@ -4,10 +4,10 @@ const prisma = new PrismaClient();
 
 async function main() {
   try {
-    // Faz uma requisição GET para a API do GitHub
-    const response = await fetch(`${import.meta.env.PUBLIC_GITHUB_URL}`).then(
-      (response) => response.json()
-    );
+    // Faz uma requisição GET para a API do GitHub import.meta.env.PUBLIC_GITHUB_URL
+    const response = await fetch(
+      "https://api.github.com/users/arthurmarconcini/repos?per_page=100"
+    ).then((response) => response.json());
 
     console.log(response);
 
