@@ -7,7 +7,7 @@ import type { Project } from "@prisma/client";
 import Pagination from "@/components/Pagination";
 import ProjectCard from "@/components/ProjectCard";
 
-export const prerender = false;
+export const prerender = true;
 
 export async function getStaticPaths({ paginate }: { paginate: Function }) {
   const repos = await prismaClient.project.findMany({
