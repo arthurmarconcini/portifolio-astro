@@ -30,7 +30,7 @@ import DarkModeToggle from "@/components/modeToggle";
   </head>
 
   <body class="flex flex-col min-h-screen">
-    <Header path={path} />
+    <Header path={path} client:only="react" />
     <DarkModeToggle client:only="react" />
     <slot />
     <Footer />
