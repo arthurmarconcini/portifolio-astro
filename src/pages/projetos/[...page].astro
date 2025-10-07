@@ -6,6 +6,8 @@ import { prismaClient } from "@/lib/prisma";
 import type { Project } from "@prisma/client";
 import type { Page, PaginateFunction } from "astro";
 
+export const prerender = true;
+
 export async function getStaticPaths({ paginate }: { paginate: PaginateFunction }) {
   const allProjects = await prismaClient.project.findMany({
     orderBy: {
