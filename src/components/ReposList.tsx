@@ -6,13 +6,18 @@ import { useState } from "react";
 
 interface ReposListProps {
   repos: Project[];
+  isPaginated?: boolean;
 }
 
-export const ReposList = ({ repos }: ReposListProps) => {
+export const ReposList = ({ repos, isPaginated = false }: ReposListProps) => {
   const [term, setTerm] = useState("");
   const top5repos = repos?.slice(0, 5);
   const renderRepos =
-    term !== "" ? repos.filter((repo) => repo.title.includes(term)) : top5repos;
+    term !== ""
+      ? repos.filter((repo) => repo.title.includes(term))
+      : isPaginated
+      ? repos
+      : top5repos;
 
   function handleSearch(value: string) {
     setTerm(value);
@@ -34,11 +39,13 @@ export const ReposList = ({ repos }: ReposListProps) => {
           <ProjectCard key={index} project={repo} />
         ))}
       </div>
-      <a href="/projetos" className="w-full">
-        <Button variant={"link"} className="w-full justify-start text-xl">
-          Ir para todos os projetos!
-        </Button>
-      </a>
+      {!isPaginated && (
+        <a href="/projetos" className="w-full">
+          <Button variant={"link"} className="w-full justify-start text-xl">
+            Ir para todos os projetos!
+          </Button>
+        </a>
+      )}
     </div>
   );
 };

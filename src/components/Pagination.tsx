@@ -15,62 +15,77 @@ interface PaginationProps {
 }
 
 const Pagination = ({ page }: PaginationProps) => {
-  const { currentPage, total, size, lastPage } = page;
+  const { currentPage, lastPage, url } = page;
 
-  const totalPages = Math.ceil(total / size);
+  const renderPageNumbers = () => {
+    const pageNumbers = [];
+    const maxPagesToShow = 5;
 
-  function renderVisiblePages() {
-    const visiblePages = [];
-    for (let i = 1; i <= totalPages; i++) {
-      visiblePages.push(i);
-    }
-    return visiblePages.map((page) => {
-      if (page >= currentPage - 1 && page <= currentPage + 1) {
-        return (
-          <PaginationItem
-            key={page}
-            className={page === currentPage ? "bg-slate-600 rounded-md" : ""}
-          >
-            <PaginationLink href={`/projetos/${page > 1 ? page : ""}`}>
-              {page}
-            </PaginationLink>
-          </PaginationItem>
-        );
+    if (lastPage <= maxPagesToShow) {
+      for (let i = 1; i <= lastPage; i++) {
+        pageNumbers.push(i);
       }
-    });
-  }
+    } else {
+      pageNumbers.push(1);
+      if (currentPage > 3) {
+        pageNumbers.push(-1); // Ellipsis
+      }
+
+      let start = Math.max(2, currentPage - 1);
+      let end = Math.min(lastPage - 1, currentPage + 1);
+
+      if (currentPage <= 2) {
+        start = 2;
+        end = 4;
+      }
+
+      if (currentPage >= lastPage - 1) {
+        start = lastPage - 3;
+        end = lastPage - 1;
+      }
+
+      for (let i = start; i <= end; i++) {
+        pageNumbers.push(i);
+      }
+
+      if (currentPage < lastPage - 2) {
+        pageNumbers.push(-1); // Ellipsis
+      }
+      pageNumbers.push(lastPage);
+    }
+
+    return pageNumbers.map((pageNumber, index) =>
+      pageNumber === -1 ? (
+        <PaginationItem key={`ellipsis-${index}`}>
+          <PaginationEllipsis />
+        </PaginationItem>
+      ) : (
+        <PaginationItem
+          key={pageNumber}
+          className={pageNumber === currentPage ? "bg-slate-600 rounded-md" : ""}
+        >
+          <PaginationLink href={url.prev ? url.prev.replace(/(\d+)$/, pageNumber.toString()) : url.next.replace(/(\d+)$/, pageNumber.toString())}>
+            {pageNumber}
+          </PaginationLink>
+        </PaginationItem>
+      )
+    );
+  };
 
   return (
     <ShadcnPagination>
       <PaginationContent>
-        {currentPage > 1 ? (
-          <>
-            <PaginationItem>
-              <PaginationPrevious
-                href={
-                  currentPage > 1 ? "/projetos" : `/projetos/${currentPage - 1}`
-                }
-              />
-            </PaginationItem>
-
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-          </>
-        ) : null}
-
-        {renderVisiblePages()}
-        {currentPage < lastPage ? (
-          <>
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-
-            <PaginationItem>
-              <PaginationNext href={`/projetos/${currentPage + 1}`} />
-            </PaginationItem>
-          </>
-        ) : null}
+        {page.url.prev && (
+          <PaginationItem>
+            <PaginationPrevious href={page.url.prev} />
+          </PaginationItem>
+        )}
+        {renderPageNumbers()}
+        {page.url.next && (
+          <PaginationItem>
+            <PaginationNext href={page.url.next} />
+          </PaginationItem>
+        )}
       </PaginationContent>
     </ShadcnPagination>
   );
