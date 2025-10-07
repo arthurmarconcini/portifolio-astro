@@ -17,6 +17,13 @@ interface PaginationProps {
 const Pagination = ({ page }: PaginationProps) => {
   const { currentPage, lastPage, url } = page;
 
+  const getPageUrl = (pageNumber: number) => {
+    if (pageNumber === 1) {
+      return "/projetos";
+    }
+    return `/projetos/${pageNumber}`;
+  };
+
   const renderPageNumbers = () => {
     const pageNumbers = [];
     const maxPagesToShow = 5;
@@ -64,7 +71,7 @@ const Pagination = ({ page }: PaginationProps) => {
           key={pageNumber}
           className={pageNumber === currentPage ? "bg-slate-600 rounded-md" : ""}
         >
-          <PaginationLink href={url.prev ? url.prev.replace(/(\d+)$/, pageNumber.toString()) : url.next.replace(/(\d+)$/, pageNumber.toString())}>
+          <PaginationLink href={getPageUrl(pageNumber)}>
             {pageNumber}
           </PaginationLink>
         </PaginationItem>
