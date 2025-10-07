@@ -1,41 +1,29 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Switch } from "@/components/ui/switch";
 import { MoonIcon, SunIcon } from "lucide-react";
 
 const DarkModeToggle = () => {
   const [isDarkMode, setIsDarkMode] = useState(() => {
-    // Check if the user has set the dark mode preference in localStorage
-    const darkMode = window.localStorage.getItem("dark-mode");
-
-    if (darkMode !== null) {
-      return darkMode === "dark";
+    if (typeof window !== "undefined") {
+      return document.documentElement.classList.contains("dark");
     }
-
-    window.localStorage.setItem("dark-mode", "dark");
-
-    return true;
+    return false;
   });
 
   const toggleDarkMode = () => {
-    if (isDarkMode) {
-      window.localStorage.setItem("dark-mode", "");
-    } else {
-      window.localStorage.setItem("dark-mode", "dark");
-    }
-
-    setIsDarkMode(!isDarkMode);
-  };
-
-  useEffect(() => {
-    if (isDarkMode) {
+    const newIsDarkMode = !isDarkMode;
+    setIsDarkMode(newIsDarkMode);
+    if (newIsDarkMode) {
       document.documentElement.classList.add("dark");
+      window.localStorage.setItem("dark-mode", "dark");
     } else {
       document.documentElement.classList.remove("dark");
+      window.localStorage.setItem("dark-mode", "light");
     }
-  }, [isDarkMode]);
+  };
 
   return (
-    <div className="flex flex-col items-center sm:flex-row gap-2 absolute top-10 right-10">
+    <div className="flex items-center gap-2">
       <Switch
         checked={isDarkMode}
         onCheckedChange={toggleDarkMode}

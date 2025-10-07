@@ -13,7 +13,6 @@ const path = Astro.url.pathname;
 
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import DarkModeToggle from "@/components/modeToggle";
 ---
 
 <!doctype html>
@@ -26,12 +25,28 @@ import DarkModeToggle from "@/components/modeToggle";
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description ? description : ""} />
+    <script is:inline>
+      const theme = (() => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('dark-mode')) {
+          return localStorage.getItem('dark-mode');
+        }
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          return 'dark';
+        }
+        return 'light';
+      })();
+
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
     <ViewTransitions transition:animate={"slide"} />
   </head>
 
   <body class="flex flex-col min-h-screen">
     <Header path={path} client:only="react" />
-    <DarkModeToggle client:only="react" />
     <slot />
     <Footer />
   </body>
