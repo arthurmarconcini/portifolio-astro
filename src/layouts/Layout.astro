@@ -52,7 +52,9 @@ import { Footer } from "@/components/Footer";
 
   <body class="flex flex-col min-h-screen">
     <Header path={path} client:only="react" />
-    <slot />
+    <div class="flex-grow">
+      <slot />
+    </div>
     <Footer />
   </body>
 </html>

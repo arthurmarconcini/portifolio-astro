@@ -19,12 +19,18 @@ export async function getStaticPaths({ paginate }: { paginate: PaginateFunction 
 }
 
 const { page } = Astro.props as { page: Page<Project> };
+const allProjects = await prismaClient.project.findMany({
+  orderBy: {
+    created_at: "desc",
+  },
+});
 ---
 
+<script define:vars={{ allProjects }}></script>
 <Layout title="Projetos" description="Meus projetos">
   <main class="p-8 mx-auto w-full max-w-6xl flex flex-col justify-center items-center gap-8 relative">
     <h1 class="text-4xl font-bold">Projetos</h1>
-    <ReposList repos={page.data} isPaginated={true} />
+    <ReposList repos={page.data} isPaginated={true} client:load />
     <Pagination page={page} />
   </main>
 </Layout>

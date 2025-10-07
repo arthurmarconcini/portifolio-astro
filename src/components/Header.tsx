@@ -31,7 +31,7 @@ export const Header = ({ path }: HeaderProps) => {
           <Button
             asChild
             variant="secondary"
-            className={path === "/projetos" ? "bg-purple-500" : ""}
+            className={path.startsWith("/projetos") ? "bg-purple-500" : ""}
           >
             <p>Projetos</p>
           </Button>
@@ -67,7 +67,7 @@ export const Header = ({ path }: HeaderProps) => {
               <Button
                 asChild
                 variant="secondary"
-                className={path === "/projetos" ? "bg-purple-500" : ""}
+                className={path.startsWith("/projetos") ? "bg-purple-500" : ""}
               >
                 <p>Projetos</p>
               </Button>

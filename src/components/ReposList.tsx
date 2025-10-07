@@ -2,7 +2,7 @@ import type { Project } from "@prisma/client";
 import { Button } from "./ui/button";
 import ProjectCard from "./ProjectCard";
 import Search from "./search";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface ReposListProps {
   repos: Project[];
@@ -11,10 +11,22 @@ interface ReposListProps {
 
 export const ReposList = ({ repos, isPaginated = false }: ReposListProps) => {
   const [term, setTerm] = useState("");
+  const [allProjects, setAllProjects] = useState<Project[]>([]);
+
+  useEffect(() => {
+    if ((window as any).allProjects) {
+      setAllProjects((window as any).allProjects);
+    }
+  }, []);
+
   const top5repos = repos?.slice(0, 5);
+  const reposToSearch = allProjects.length > 0 ? allProjects : repos;
+
   const renderRepos =
     term !== ""
-      ? repos.filter((repo) => repo.title.includes(term))
+      ? reposToSearch.filter((repo) =>
+          repo.title.toLowerCase().includes(term.toLowerCase())
+        )
       : isPaginated
       ? repos
       : top5repos;
