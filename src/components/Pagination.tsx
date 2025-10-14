@@ -15,7 +15,7 @@ interface PaginationProps {
 }
 
 const Pagination = ({ page }: PaginationProps) => {
-  const { currentPage, lastPage, url } = page;
+  const { currentPage, lastPage } = page;
 
   const getPageUrl = (pageNumber: number) => {
     if (pageNumber === 1) {
@@ -69,7 +69,9 @@ const Pagination = ({ page }: PaginationProps) => {
       ) : (
         <PaginationItem
           key={pageNumber}
-          className={pageNumber === currentPage ? "bg-slate-600 rounded-md" : ""}
+          className={
+            pageNumber === currentPage ? "bg-slate-600 rounded-md" : ""
+          }
         >
           <PaginationLink href={getPageUrl(pageNumber)}>
             {pageNumber}

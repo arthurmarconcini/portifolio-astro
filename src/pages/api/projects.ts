@@ -20,7 +20,7 @@ export const GET: APIRoute = async ({ request }) => {
     let projects;
     const queryOptions = {
       orderBy: {
-        created_at: 'desc',
+        created_at: 'desc' as const,
       },
     };
 

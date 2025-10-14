@@ -12,7 +12,7 @@ import {
 } from "./ui/form";
 import { Input } from "./ui/input";
 import { useForm } from "react-hook-form";
-import { Card, CardContent, CardTitle } from "./ui/card";
+import { Card, CardContent } from "./ui/card";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
 
