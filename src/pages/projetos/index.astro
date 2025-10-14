@@ -1,0 +1,24 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { ReposList } from "@/components/ReposList";
+import { prismaClient } from "@/lib/prisma";
+import type { Project } from "@prisma/client";
+
+// Fetch the first page of projects, same as the home page.
+// The ReposList component will handle fetching more.
+const initialProjects: Project[] = await prismaClient.project.findMany({
+  orderBy: {
+    created_at: "desc",
+  },
+  take: 6,
+});
+---
+
+<Layout title="Projetos | Arthur Marconcini">
+  <main class="p-4 md:p-8 mx-auto w-full max-w-7xl flex flex-col justify-center items-center gap-8 relative">
+    <a href="/" class="text-violet-400 hover:text-violet-600 transition-colors self-start -mb-4">
+      &larr; Voltar para a Home
+    </a>
+    <ReposList initialProjects={initialProjects} client:only="react" />
+  </main>
+</Layout>
