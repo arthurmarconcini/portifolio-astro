@@ -7,36 +7,55 @@ import nextImg from "./../assets/next.svg";
 import tailwindImg from "./../assets/tailwind.svg";
 import nodeImg from "./../assets/node-js.svg";
 
-const Tools = () => {
-  return (
-    <div className="flex flex-wrap justify-center gap-4 my-6">
-      <div>
-        <img className="w-10 h-10" src={htmlImg.src} alt="html" />
-      </div>
-      <div>
-        <img className="w-10 h-10" src={cssImg.src} alt="css" />
-      </div>
-      <div>
-        <img className="w-10 h-10" src={jsImg.src} alt="js" />
-      </div>
-      <div>
-        <img className="w-10 h-10" src={reactImg.src} alt="react" />
-      </div>
-      <div>
-        <img className="w-10 h-10" src={nodeImg.src} alt="node" />
-      </div>
-      <div>
-        <img className="w-10 h-10" src={astroImg.src} alt="astro" />
-      </div>
-      <div>
+const tools = [
+  { src: htmlImg.src, alt: "HTML" },
+  { src: cssImg.src, alt: "CSS" },
+  { src: jsImg.src, alt: "JavaScript" },
+  { name: "TypeScript" },
+  { src: reactImg.src, alt: "React" },
+  { src: nextImg.src, alt: "Next.js", isRounded: true },
+  { src: nodeImg.src, alt: "Node.js" },
+  { name: "AdonisJS" },
+  { src: astroImg.src, alt: "Astro" },
+  { src: tailwindImg.src, alt: "Tailwind CSS" },
+  { name: "Prisma" },
+  { name: "Java" },
+  { name: "C#" },
+  { name: "Dart" },
+  { name: "Flutter" },
+  { name: "Angular" },
+];
+
+const Tool = ({ tool }: { tool: any }) => {
+  if (tool.src) {
+    return (
+      <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center transition-transform hover:scale-110">
         <img
-          className="w-10 h-10 bg-white rounded-full"
-          src={nextImg.src}
-          alt="next"
+          className={`w-10 h-10 ${tool.isRounded ? "bg-white rounded-full" : ""}`}
+          src={tool.src}
+          alt={tool.alt}
         />
       </div>
-      <div>
-        <img className="w-10 h-10" src={tailwindImg.src} alt="tailwind" />
+    );
+  }
+
+  return (
+    <div className="p-2 px-4 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center transition-transform hover:scale-110">
+      <span className="font-semibold text-sm text-gray-700 dark:text-gray-300">
+        {tool.name}
+      </span>
+    </div>
+  );
+};
+
+const Tools = () => {
+  return (
+    <div className="w-full">
+      <h2 className="text-xl font-semibold text-center mb-4">Ferramentas e Tecnologias</h2>
+      <div className="flex flex-wrap justify-center gap-4">
+        {tools.map((tool, index) => (
+          <Tool key={index} tool={tool} />
+        ))}
       </div>
     </div>
   );

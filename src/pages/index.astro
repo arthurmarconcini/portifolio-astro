@@ -27,35 +27,38 @@ const projects: Project[] = await prismaClient.project.findMany({
 
 <Layout title="Arthur Marconcini" description={description}>
   <main
-    class="p-8 mx-auto w-full max-w-6xl flex flex-col justify-center items-center gap-8 relative"
+    class="p-4 md:p-8 mx-auto w-full max-w-6xl flex flex-col justify-center items-center gap-12 relative"
   >
-    <AvatarComponent />
-    <div
-      class="w-full max-w-3xl p-8 mx-auto bg-white/50 dark:bg-black/50 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800 animate-fade-in"
-    >
-      <h1
-        class="mb-4 text-3xl md:text-4xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-sky-400"
-      >
-        Desenvolvedor Fullstack & Analista de Sistemas
-      </h1>
+    <section class="w-full flex flex-col items-center gap-8">
+      <AvatarComponent />
       <div
-        class="flex flex-col gap-4 text-center text-base md:text-lg text-gray-700 dark:text-gray-300"
+        class="w-full max-w-3xl p-6 md:p-8 mx-auto bg-white/50 dark:bg-black/50 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800 animate-fade-in"
       >
-        <p>
-          Com 3 anos de experiência como desenvolvedor freelancer e atuação como
-          Analista de Sistemas, sou apaixonado por criar soluções de software
-          robustas e eficientes. Formado em Ciências da Computação, busco
-          constantemente aprimorar minhas habilidades e aplicar meu conhecimento
-          em projetos desafiadores.
-        </p>
-        <p>
-          Especializado no ecossistema Javascript com React, Next.js e Node.js,
-          tenho um forte foco na construção de interfaces de usuário modernas e na
-          entrega de uma ótima experiência ao usuário.
-        </p>
+        <h1
+          class="mb-4 text-3xl md:text-4xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-sky-400"
+        >
+          Desenvolvedor Fullstack & Analista de Sistemas
+        </h1>
+        <div
+          class="flex flex-col gap-4 text-center text-base md:text-lg text-gray-700 dark:text-gray-300"
+        >
+          <p>
+            Com 3 anos de experiência como desenvolvedor freelancer e atuação
+            como Analista de Sistemas, sou apaixonado por criar soluções de
+            software robustas e eficientes. Formado em Ciências da Computação,
+            busco constantemente aprimorar minhas habilidades e aplicar meu
+            conhecimento em projetos desafiadores.
+          </p>
+          <p>
+            Especializado no ecossistema Javascript com React, Next.js e
+            Node.js, tenho um forte foco na construção de interfaces de usuário
+            modernas e na entrega de uma ótima experiência ao usuário.
+          </p>
+        </div>
       </div>
-    </div>
-    <Tools />
+      <Tools />
+    </section>
+
     <div class="w-full max-w-sm">
       <a
         href="https://drive.google.com/file/d/1bPgQLDLuF1Di0KqBEESXZ5ZOBgxm8lxq/view?usp=sharing"
@@ -69,9 +72,10 @@ const projects: Project[] = await prismaClient.project.findMany({
         </Button>
       </a>
     </div>
+
     <ReposList initialProjects={projects} client:only="react" />
 
-    <!-- <ContactForm client:only="react" /> -->
+    {/* <ContactForm client:only="react" /> */}
     <SocialList />
     <TopButton client:only="react" />
   </main>
