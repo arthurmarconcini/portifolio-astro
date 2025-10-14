@@ -1,63 +1,119 @@
 import type { Project } from "@prisma/client";
-import { Button } from "./ui/button";
+import { useEffect, useState } from "react";
 import ProjectCard from "./ProjectCard";
 import Search from "./search";
-import { useEffect, useState } from "react";
+import { Button } from "./ui/button";
 
-interface ReposListProps {
-  repos: Project[];
-  isPaginated?: boolean;
-}
-
-export const ReposList = ({ repos, isPaginated = false }: ReposListProps) => {
-  const [term, setTerm] = useState("");
-  const [allProjects, setAllProjects] = useState<Project[]>([]);
+// Debounce hook
+function useDebounce(value: string, delay: number) {
+  const [debouncedValue, setDebouncedValue] = useState(value);
 
   useEffect(() => {
-    if ((window as any).allProjects) {
-      setAllProjects((window as any).allProjects);
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
+}
+
+interface ReposListProps {
+  initialProjects: Project[];
+}
+
+export const ReposList = ({ initialProjects }: ReposListProps) => {
+  const [term, setTerm] = useState("");
+  const debouncedTerm = useDebounce(term, 500);
+  const [projects, setProjects] = useState<Project[]>(initialProjects);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(initialProjects.length === 6);
+  const [loading, setLoading] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
+
+  const loadMoreProjects = async () => {
+    if (loading || !hasMore) return;
+    setLoading(true);
+    const nextPage = page + 1;
+    try {
+      const response = await fetch(`/api/projects?page=${nextPage}&limit=6`);
+      const newProjects = await response.json();
+      if (newProjects.length > 0) {
+        setProjects((prevProjects) => [...prevProjects, ...newProjects]);
+        setPage(nextPage);
+        if (newProjects.length < 6) {
+          setHasMore(false);
+        }
+      } else {
+        setHasMore(false);
+      }
+    } catch (error) {
+      console.error("Failed to fetch projects:", error);
+    } finally {
+      setLoading(false);
     }
-  }, []);
+  };
 
-  const top5repos = repos?.slice(0, 5);
-  const reposToSearch = allProjects.length > 0 ? allProjects : repos;
+  const searchProjects = async (searchTerm: string) => {
+    setIsSearching(true);
+    setLoading(true);
+    try {
+      const response = await fetch(`/api/projects?term=${searchTerm}`);
+      const searchedProjects = await response.json();
+      setProjects(searchedProjects);
+      setHasMore(false); // No pagination for search results
+    } catch (error) {
+      console.error("Failed to search projects:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  const renderRepos =
-    term !== ""
-      ? reposToSearch.filter((repo) =>
-          repo.title.toLowerCase().includes(term.toLowerCase())
-        )
-      : isPaginated
-      ? repos
-      : top5repos;
+  const resetSearch = () => {
+    setIsSearching(false);
+    setProjects(initialProjects);
+    setPage(1);
+    setHasMore(initialProjects.length === 6);
+  };
 
-  function handleSearch(value: string) {
+  useEffect(() => {
+    if (debouncedTerm) {
+      searchProjects(debouncedTerm);
+    } else {
+      resetSearch();
+    }
+  }, [debouncedTerm]);
+
+  const handleSearch = (value: string) => {
     setTerm(value);
-  }
+  };
 
   return (
-    <div className="flex flex-col gap-4">
-      <h1>Últimos projetos</h1>
+    <div className="flex flex-col gap-8 w-full">
+      <h1 className="text-2xl font-bold">Meus Projetos</h1>
       <Search handleSearch={handleSearch} />
-      {renderRepos.length === 0 && (
-        <div className="w-80 md:w-96 lg:w-[32rem]">
+      {projects.length === 0 && (term !== "" || isSearching) && (
+        <div className="w-full">
           <h1 className="font-bold text-lg text-slate-800">
-            Nenhum encontrado!
+            Nenhum projeto encontrado!
           </h1>
         </div>
       )}
-      <div className="flex flex-col gap-2 w-full">
-        {renderRepos.map((repo, index) => (
-          <ProjectCard key={index} project={repo} />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
+        {projects.map((project) => (
+          <ProjectCard key={project.id} project={project} />
         ))}
       </div>
-      {!isPaginated && (
-        <a href="/projetos" className="w-full">
-          <Button variant={"link"} className="w-full justify-start text-xl">
-            Ir para todos os projetos!
+      <div className="flex justify-center">
+        {!isSearching && hasMore && (
+          <Button onClick={loadMoreProjects} disabled={loading}>
+            {loading ? "Carregando..." : "Mostrar mais projetos"}
           </Button>
-        </a>
-      )}
+        )}
+      </div>
     </div>
   );
 };

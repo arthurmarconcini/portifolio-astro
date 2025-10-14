@@ -12,12 +12,20 @@ async function main() {
     console.log(response);
 
     // Mapeia os dados da resposta para o formato desejado
-    const repositories = response.map((repo) => ({
-      title: repo.name,
-      description: repo.description || "",
-      created_at: repo.created_at,
-      github_url: repo.html_url,
-    }));
+    const repositories = response.map((repo) => {
+      const screenshot_url = repo.homepage
+        ? `https://raw.githubusercontent.com/arthurmarconcini/${repo.name}/main/screenshot.png`
+        : `https://opengraph.githubassets.com/1/arthurmarconcini/${repo.name}`;
+
+      return {
+        title: repo.name,
+        description: repo.description || "",
+        created_at: repo.created_at,
+        github_url: repo.html_url,
+        screenshot_url: screenshot_url,
+        url: repo.homepage,
+      };
+    });
 
     // Cria os registros no banco de dados usando o Prisma
     await prisma.project.createMany({
