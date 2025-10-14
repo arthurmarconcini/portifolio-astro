@@ -46,15 +46,17 @@ const projects: Project[] = await prismaClient.project.findMany({
       </p>
     </div>
     <Tools />
-    <div class="flex items-center justify-start gap-4">
-      <span class="font-light text-lg">Baixar Curriculum</span>
+    <div class="w-full max-w-sm">
       <a
         href="https://drive.google.com/file/d/1bPgQLDLuF1Di0KqBEESXZ5ZOBgxm8lxq/view?usp=sharing"
         target="_blank"
-        rel="noreferrer"
-        class="animate-pulse border border-slate-400 rounded-lg p-2"
+        rel="noopener noreferrer"
+        class="w-full"
       >
-        <Button asChild variant="outline"><Download /></Button>
+        <Button variant="outline" className="w-full text-lg py-6 animate-pulse">
+          <Download className="w-5 h-5 mr-2" />
+          Baixar Currículo
+        </Button>
       </a>
     </div>
     <ReposList initialProjects={projects} client:only="react" />

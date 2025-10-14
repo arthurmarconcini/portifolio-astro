@@ -33,6 +33,20 @@ export const ReposList = ({ initialProjects }: ReposListProps) => {
   const [hasMore, setHasMore] = useState(initialProjects.length === 6);
   const [loading, setLoading] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
+  const [totalCount, setTotalCount] = useState<number | null>(null);
+
+  useEffect(() => {
+    const fetchCount = async () => {
+      try {
+        const response = await fetch("/api/projects/count");
+        const data = await response.json();
+        setTotalCount(data.count);
+      } catch (error) {
+        console.error("Failed to fetch project count:", error);
+      }
+    };
+    fetchCount();
+  }, []);
 
   const loadMoreProjects = async () => {
     if (loading || !hasMore) return;
@@ -82,7 +96,8 @@ export const ReposList = ({ initialProjects }: ReposListProps) => {
   useEffect(() => {
     if (debouncedTerm) {
       searchProjects(debouncedTerm);
-    } else {
+    } else if (isSearching) {
+      // Only reset if a search was active
       resetSearch();
     }
   }, [debouncedTerm]);
@@ -93,7 +108,9 @@ export const ReposList = ({ initialProjects }: ReposListProps) => {
 
   return (
     <div className="flex flex-col gap-8 w-full">
-      <h1 className="text-2xl font-bold">Meus Projetos</h1>
+      <h1 className="text-2xl font-bold">
+        Meus Projetos {totalCount !== null ? `(${totalCount})` : ""}
+      </h1>
       <Search handleSearch={handleSearch} />
       {projects.length === 0 && (term !== "" || isSearching) && (
         <div className="w-full">
