@@ -30,20 +30,30 @@ const projects: Project[] = await prismaClient.project.findMany({
     class="p-8 mx-auto w-full max-w-6xl flex flex-col justify-center items-center gap-8 relative"
   >
     <AvatarComponent />
-    <div class="flex flex-col items-center">
+    <div
+      class="w-full max-w-3xl p-8 mx-auto bg-white/50 dark:bg-black/50 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800 animate-fade-in"
+    >
       <h1
-        class="mb-8 font-bold type-social text-lg font-noto antialiased dark:text-white text-slate-900"
+        class="mb-4 text-3xl md:text-4xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-sky-400"
       >
+        Desenvolvedor Fullstack & Analista de Sistemas
       </h1>
-      <p>
-        🎓 Formado em Ciências da Computação pela Faculdade Pitágoras de
-        Guarapari em 2022
-      </p>
-      <p>💼 Desenvolvedor Fullstack Freelancer há 1 ano.</p>
-      <p>
-        🤝 Estou sempre aberto a fazer novos contatos e colaborar em projetos
-        empolgantes.
-      </p>
+      <div
+        class="flex flex-col gap-4 text-center text-base md:text-lg text-gray-700 dark:text-gray-300"
+      >
+        <p>
+          Com 3 anos de experiência como desenvolvedor freelancer e atuação como
+          Analista de Sistemas, sou apaixonado por criar soluções de software
+          robustas e eficientes. Formado em Ciências da Computação, busco
+          constantemente aprimorar minhas habilidades e aplicar meu conhecimento
+          em projetos desafiadores.
+        </p>
+        <p>
+          Especializado no ecossistema Javascript com React, Next.js e Node.js,
+          tenho um forte foco na construção de interfaces de usuário modernas e na
+          entrega de uma ótima experiência ao usuário.
+        </p>
+      </div>
     </div>
     <Tools />
     <div class="w-full max-w-sm">
