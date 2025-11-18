@@ -28,24 +28,37 @@ import { Footer } from "@/components/Footer";
     <script is:inline>
       const applyTheme = () => {
         const theme = (() => {
-          if (typeof localStorage !== 'undefined' && localStorage.getItem('dark-mode')) {
-            return localStorage.getItem('dark-mode');
+          if (
+            typeof localStorage !== "undefined" &&
+            localStorage.getItem("dark-mode")
+          ) {
+            return localStorage.getItem("dark-mode");
           }
-          if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            return 'dark';
+          if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            return "dark";
           }
-          return 'light';
+          return "light";
         })();
 
-        if (theme === 'dark') {
-          document.documentElement.classList.add('dark');
+        if (theme === "dark") {
+          document.documentElement.classList.add("dark");
         } else {
-          document.documentElement.classList.remove('dark');
+          document.documentElement.classList.remove("dark");
         }
-      }
+      };
 
       applyTheme();
-      document.addEventListener('astro:after-swap', applyTheme);
+      document.addEventListener("astro:after-swap", applyTheme);
+
+      // Listen for system theme changes
+      window
+        .matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", () => {
+          // Only re-apply if there is no override
+          if (!localStorage.getItem("dark-mode")) {
+            applyTheme();
+          }
+        });
     </script>
     <ViewTransitions transition:animate={"slide"} />
   </head>
