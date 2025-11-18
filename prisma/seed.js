@@ -13,9 +13,17 @@ async function main() {
 
     // Mapeia os dados da resposta para o formato desejado
     const repositories = response.map((repo) => {
-      const screenshot_url = repo.homepage
-        ? `https://raw.githubusercontent.com/arthurmarconcini/${repo.name}/main/screenshot.png`
-        : `https://opengraph.githubassets.com/1/arthurmarconcini/${repo.name}`;
+      // Prioritize OpenGraph image to avoid broken links from raw.githubusercontent
+      const screenshot_url = `https://opengraph.githubassets.com/1/arthurmarconcini/${repo.name}`;
+
+      const tags = [];
+      if (repo.language) tags.push(repo.language);
+      if (repo.topics && Array.isArray(repo.topics)) {
+        tags.push(...repo.topics);
+      }
+
+      // Remove duplicates
+      const uniqueTags = [...new Set(tags)];
 
       return {
         title: repo.name,
@@ -24,8 +32,12 @@ async function main() {
         github_url: repo.html_url,
         screenshot_url: screenshot_url,
         url: repo.homepage,
+        tags: uniqueTags,
       };
     });
+
+    // Limpa o banco de dados antes de inserir os novos dados
+    await prisma.project.deleteMany();
 
     // Cria os registros no banco de dados usando o Prisma
     await prisma.project.createMany({

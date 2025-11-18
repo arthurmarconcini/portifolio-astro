@@ -22,4 +22,5 @@ model Project {
   github_url     String   @unique
   url            String?
   screenshot_url String?
+  tags           String[]
 }
